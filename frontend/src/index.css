@@ -1,0 +1,102 @@
+/* ── Tailwind directives ─────────────────────────────────────────────────── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    -webkit-font-smoothing:  antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  /* Off-white page canvas — warm, paper-like, no harsh white */
+  body {
+    background-color: #F9FAFB;
+    color: #1c1917;   /* stone-900 */
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+                 'Segoe UI', sans-serif;
+  }
+
+  /* Soft focus rings using sage green */
+  :focus-visible {
+    outline: 2px solid rgba(16, 185, 129, 0.45);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  button:focus:not(:focus-visible),
+  input:focus:not(:focus-visible),
+  textarea:focus:not(:focus-visible) { outline: none; }
+
+  /* Light scrollbar */
+  ::-webkit-scrollbar               { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track         { background: #F9FAFB; }
+  ::-webkit-scrollbar-thumb         { background: #d6d3d1; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover   { background: #a8a29e; }
+
+  ::selection {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #064e3b;
+  }
+}
+
+/* ── Design tokens ───────────────────────────────────────────────────────── */
+:root {
+  --bg-page:    #F9FAFB;   /* off-white canvas          */
+  --bg-card:    #ffffff;   /* white card surfaces        */
+  --bg-subtle:  #f5f5f4;   /* stone-100 inset areas      */
+  --border:     #e7e5e4;   /* stone-200 borders          */
+  --text-main:  #1c1917;   /* stone-900 headings         */
+  --text-muted: #78716c;   /* stone-500 secondary text   */
+  --accent:     #059669;   /* emerald-600 primary accent */
+  --accent-hover: #047857; /* emerald-700 hover          */
+}
+
+/* ── Keyframes ───────────────────────────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+@keyframes slide-in-from-bottom-2 {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+@keyframes spin-slow    { from { transform:rotate(0deg)   } to { transform:rotate(360deg)  } }
+@keyframes spin-reverse { from { transform:rotate(0deg)   } to { transform:rotate(-360deg) } }
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+@keyframes scanLine {
+  0%   { top: 10%; opacity: 0;   }
+  15%  { opacity: 0.5;            }
+  85%  { opacity: 0.5;            }
+  100% { top: 90%; opacity: 0;   }
+}
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+@layer utilities {
+  .animate-fade-in      { animation: fade-in      0.2s ease forwards; }
+  .animate-spin-slow    { animation: spin-slow    2s linear infinite;  }
+  .animate-spin-reverse { animation: spin-reverse 0.8s linear infinite;}
+  .animate-scan-line    { animation: scanLine     2s ease-in-out infinite; }
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent 25%, rgba(0,0,0,0.03) 50%, transparent 75%);
+    background-size: 200% auto;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* animate-in helpers */
+  .animate-in                { animation-fill-mode: both; }
+  .fade-in                   { animation-name: fade-in; animation-duration: 0.2s; }
+  .slide-in-from-bottom-2    { animation-name: slide-in-from-bottom-2; animation-duration: 0.25s; }
+  .duration-300              { animation-duration: 0.3s; }
+
+  .bg-gradient-radial { background-image: radial-gradient(var(--tw-gradient-stops)); }
+
+  /* Utility used by shadow-xs */
+  .shadow-xs { box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); }
+}
