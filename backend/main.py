@@ -9,7 +9,7 @@ Responsibilities:
 """
 
 import os
-os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'  # <-- YEH LINE ADD KAREIN!
+os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -84,10 +84,12 @@ def create_app() -> Flask:
     return app
 
 
+# Yeh line Render ke gunicorn ke liye global app object expose karti hai
+app = create_app()
+
 # ── Run directly (dev only) ───────────────────────────────────────────────────
 if __name__ == "__main__":
-    flask_app = create_app()
-    flask_app.run(
+    app.run(
         host=os.getenv("FLASK_HOST", "0.0.0.0"),
         port=int(os.getenv("FLASK_PORT", 5000)),
         debug=os.getenv("FLASK_DEBUG", "true").lower() == "true",
