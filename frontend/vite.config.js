@@ -25,7 +25,7 @@ export default defineConfig({
        * Axios baseURL should be '' (empty) in dev to leverage the proxy.
        */
       '/api': {
-        target:      'http://localhost:5000',
+        target:      'https://ai-expense-backend-u63c.onrender.com',
         changeOrigin: true,
         secure:       false,
 

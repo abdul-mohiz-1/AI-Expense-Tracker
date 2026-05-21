@@ -39,7 +39,7 @@ export const userStorage = {
 // ── Axios instance ────────────────────────────────────────────────────────────
 // Empty baseURL → uses Vite proxy (see vite.config.js) — no CORS in dev
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '',
+  baseURL: 'https://ai-expense-backend-u63c.onrender.com',
   timeout: 120000, // Isay 2 minute (120,000) kar diya hai
   headers: { 'Content-Type': 'application/json' },
 });
@@ -153,21 +153,17 @@ export async function getHistory() {
   return data;
 }
 
-// ── Dashboard Dynamic Endpoints ─────────────────────────────────────────
-
-// Dashboard stat cards ke liye (Income, Expense, Net)
 export async function getDashboardStats() {
   const { data } = await api.get('/api/expenses/stats');
   return data;
 }
 
-// Naye chart aur monthly breakdown ke liye
+
 export async function getDashboardHistory() {
   const { data } = await api.get('/api/expenses/history');
   return data;
 }
 
-// Yahan function ka naam theek kar ke 'saveBillingSetup' kar diya hai
 export async function saveBillingSetup(payload) {
   const { data } = await api.patch('/api/auth/me/settings', payload);
   return data;
