@@ -11,19 +11,18 @@ Flask-JWT-Extended==4.6.0
 bcrypt==4.1.3
 
 # ── AI Providers ──────────────────────────────────────────────────────────────
-google-generativeai==0.7.2          # Gemini (Vision + Text)
-groq==0.9.0                         # Groq Llama 3 / Llama 3.2 Vision
+google-generativeai==0.7.2          
+groq==0.9.0                         
 
 # ── Google Sheets ─────────────────────────────────────────────────────────────
 gspread==6.1.2
 google-auth==2.29.0
 
 # ── Utilities ─────────────────────────────────────────────────────────────────
-python-dotenv==1.0.1                # Load .env variables
-Pillow==10.3.0                      # Image validation/processing
-python-dateutil==2.9.0              # Robust date parsing
+python-dotenv==1.0.1                
+Pillow==10.3.0                      
+python-dateutil==2.9.0              
 
-# ── Production Server (optional, swap to gunicorn in prod) ───────────────────
+# ── Production Server ────────────────────────────────────────────────────────
 gunicorn==22.0.0
 httpx==0.27.2
-@react-oauth/google
