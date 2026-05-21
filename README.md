@@ -1,4 +1,8 @@
 AI Expense & Business Tracker
+installation setup is mentionon last.
+
+
+
 🤔 What is this project?
 This is a smart, AI-powered web application that helps people track their daily expenses and income. Instead of filling out long, boring forms like traditional accounting apps, this project uses Artificial Intelligence (AI) to do the hard work. You can simply type a sentence like "I paid 2,500 rupees for electricity today" or upload a picture of a shopping receipt, and the AI will automatically understand the amount, category, and date.
 
@@ -22,3 +26,21 @@ Live Google Sheets Sync: The app connects directly to the user's Google Drive. E
 Visual Dashboard: The app features a beautiful dashboard with charts and cards that show total income, total expenses, and profit/loss history at a glance.
 
 Overspend Alerts: If a user spends more than they earned in a billing cycle, the system immediately shows a warning alert.
+
+
+
+|TO run:
+
+Installation & Setup
+1. Backend Setup
+Bash
+cd backend
+python -m venv venv
+source venv/Scripts/activate  # On Windows
+pip install -r requirements.txt
+python main.py
+2. Frontend Setup
+Bash
+cd frontend
+npm install
+npm run dev
