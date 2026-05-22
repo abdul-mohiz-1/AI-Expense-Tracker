@@ -9,9 +9,9 @@
  * the payload field for known emails).
  */
 
-import { useState, useEffect }   from 'react';
+import { useState }                 from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useGoogleLogin }         from '@react-oauth/google';
+import { useGoogleLogin }           from '@react-oauth/google';
 import {
   Loader2, AlertCircle, ReceiptText,
   Home, Briefcase, ShieldCheck, Zap, BarChart3,
@@ -33,10 +33,10 @@ function GoogleLogo({ size = 18 }) {
 }
 
 const FEATURES = [
-  { icon: Zap,        text: 'Voice command entry in seconds'     },
-  { icon: ReceiptText,text: 'AI-powered receipt scanning'        },
-  { icon: BarChart3,  text: 'Automatic categorisation & charts'  },
-  { icon: ShieldCheck,text: 'Logged to your own Google Sheet'    },
+  { icon: Zap,         text: 'Voice command entry in seconds'     },
+  { icon: ReceiptText, text: 'AI-powered receipt scanning'        },
+  { icon: BarChart3,   text: 'Automatic categorisation & charts'  },
+  { icon: ShieldCheck, text: 'Logged to your own Google Sheet'    },
 ];
 
 export default function Login() {

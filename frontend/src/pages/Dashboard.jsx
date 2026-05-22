@@ -66,7 +66,8 @@ function BillingSetupModal({ accountType, onSaved }) {
   const role = ROLE_COPY[accountType] || ROLE_COPY.household;
 
   const [startDay,     setStartDay]     = useState('1');
-  const [incomeType,   setIncomeType]   = useState('fixed');
+  // Automatically default business accounts to variable income type
+  const [incomeType,   setIncomeType]   = useState(accountType === 'business' ? 'variable' : 'fixed');
   const [salaryAmount, setSalaryAmount] = useState('');
   const [loading,      setLoading]      = useState(false);
   const [error,        setError]        = useState('');
@@ -117,6 +118,7 @@ function BillingSetupModal({ accountType, onSaved }) {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
+          {/* Cycle Start Day (Visible to BOTH Business and Household) */}
           <div className="space-y-2">
             <label className="block text-sm font-semibold text-stone-700">
               Cycle Start Day
@@ -146,33 +148,37 @@ function BillingSetupModal({ accountType, onSaved }) {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-stone-700">Income Type</label>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { value: 'fixed',    title: 'Fixed Salary',      desc: 'Auto-added on cycle start date', icon: DollarSign },
-                { value: 'variable', title: 'Variable / Daily',  desc: 'You log each income entry',       icon: TrendingUp },
-              ].map(({ value, title, desc, icon: Icon }) => (
-                <button key={value} type="button" onClick={() => setIncomeType(value)}
-                  className={`flex flex-col items-start gap-1.5 p-3.5 rounded-xl border-2 text-left
-                    transition-all duration-150
-                    ${incomeType === value
-                      ? 'border-emerald-500 bg-emerald-50'
-                      : 'border-stone-200 bg-white hover:border-stone-300'
-                    }`}>
-                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center
-                    ${incomeType === value ? 'bg-emerald-500 text-white' : 'bg-stone-100 text-stone-400'}`}>
-                    <Icon size={14} />
-                  </div>
-                  <p className={`text-sm font-semibold
-                    ${incomeType === value ? 'text-emerald-800' : 'text-stone-700'}`}>{title}</p>
-                  <p className="text-[11px] text-stone-400 leading-relaxed">{desc}</p>
-                </button>
-              ))}
+          {/* Income Type (HIDDEN for Business Accounts) */}
+          {accountType !== 'business' && (
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-stone-700">Income Type</label>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { value: 'fixed',    title: 'Fixed Salary',    desc: 'Auto-added on cycle start date', icon: DollarSign },
+                  { value: 'variable', title: 'Variable / Daily',  desc: 'You log each income entry',       icon: TrendingUp },
+                ].map(({ value, title, desc, icon: Icon }) => (
+                  <button key={value} type="button" onClick={() => setIncomeType(value)}
+                    className={`flex flex-col items-start gap-1.5 p-3.5 rounded-xl border-2 text-left
+                      transition-all duration-150
+                      ${incomeType === value
+                        ? 'border-emerald-500 bg-emerald-50'
+                        : 'border-stone-200 bg-white hover:border-stone-300'
+                      }`}>
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center
+                      ${incomeType === value ? 'bg-emerald-500 text-white' : 'bg-stone-100 text-stone-400'}`}>
+                      <Icon size={14} />
+                    </div>
+                    <p className={`text-sm font-semibold
+                      ${incomeType === value ? 'text-emerald-800' : 'text-stone-700'}`}>{title}</p>
+                    <p className="text-[11px] text-stone-400 leading-relaxed">{desc}</p>
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          {incomeType === 'fixed' && (
+          {/* Fixed Target Input (HIDDEN for Business Accounts) */}
+          {accountType !== 'business' && incomeType === 'fixed' && (
             <div className="space-y-1.5">
               <label className="block text-sm font-semibold text-stone-700">
                 {role.salaryLabel} <span className="text-stone-400 font-normal">(PKR)</span>
@@ -366,11 +372,11 @@ export default function Dashboard() {
   const accountType      = user?.account_type || 'household';
   const role             = ROLE_COPY[accountType] || ROLE_COPY.household;
 
-  const [mode,        setMode]        = useState('quick');
+  const [mode,           setMode]        = useState('quick');
   const [recentItems, setRecentItems] = useState([]);
 
   // ── Stats (current cycle) ──────────────────────────────────────────────
-  const [stats,        setStats]        = useState(null);
+  const [stats,           setStats]        = useState(null);
   const [statsLoading, setStatsLoading] = useState(true);
   const [statsError,   setStatsError]   = useState('');
 
@@ -380,6 +386,8 @@ export default function Dashboard() {
 
   // ── Setup modal ────────────────────────────────────────────────────────
   const [showSetup, setShowSetup] = useState(false);
+
+  // TODO: Add state here later for Business-specific filters (e.g. Marketing, Shipping, Taxes)
 
   const fetchStats = useCallback(async () => {
     setStatsLoading(true);
